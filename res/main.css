@@ -2,4 +2,9 @@
     width: 640px;
     height: 480px;
     margin: auto;
+
+    /* additional styles for Rick */
+    position: relative;
+    background-color: #8CD;
+
 }
