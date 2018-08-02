@@ -1,45 +1,25 @@
-let clickers = 50;
-let startTime = Date.now();
-// position element in the DOM
-function sync (dom, pos) {
-    dom.style.left = `${pos.x}px`;
-    dom.style.top = `${pos.y}px`;
-}
-//`${pos.x}px`
+import { randomColor, randomNum } from './helpers';
 
-function addClicker () {
-    const pos = {
-      x: Math.random() * 500,
-      y: Math.random() * 300
-    };
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+const text ='Nándi bácsi';
+
+
+function drawLines(){
+    context.beginPath();
+    context.lineWidth = Math.random()*5;
+    context.moveTo(Math.floor(Math.random()*context.canvas.width), Math.floor(Math.random()*context.canvas.height));
+    context.lineTo(Math.floor(Math.random()*context.canvas.width), Math.floor(Math.random()*context.canvas.height))
     
-    const img = new Image();
-    img.src = "res/images/rick.jpg";
-    img.style.position = "absolute";
-    img.addEventListener("click", removeClicker, false);
-    document.querySelector("#board").appendChild(img);
-    sync(img, pos);
-}
-
-function removeClicker (e) {
-    e.target.parentNode.removeChild(e.target);
-    clickers--;
-    checkGameOver();
+    context.strokeStyle = randomColor();
+    context.stroke();
 }
 
 
-function checkGameOver() {
-    document.querySelector("#remain").innerHTML = clickers;
-    if (clickers === 0) {
-      const taken = Math.round((Date.now() - startTime) / 1000);
-      alert(`De-rick-ed in ${taken} seconds!`);
-    }
-}
+setInterval(drawLines.bind(this), 40)
+
+drawLines()
 
 
 
-window.addEventListener('load', function(){
-    for (let i = 0; i < clickers; i++) {
-  addClicker();
-}
-}, false )
+
