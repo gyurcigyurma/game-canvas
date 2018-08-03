@@ -1,10 +1,6 @@
-#board {
-    width: 640px;
-    height: 480px;
-    margin: auto;
-
-    /* additional styles for Rick */
+canvas {
     position: relative;
-    background-color: #8CD;
-
+    top:5px;
+    left:5px;
+ outline: 1px solid red;
 }
