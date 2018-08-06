@@ -1,30 +1,49 @@
-import { randomColor, randomNum } from './helpers';
+import * as helpers from './helpers';
 
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
-const text ='Nándi bácsi';
 
-const canvasWidth = canvas.width;
-const canvasHeight = canvas.height;
+const clearArea = document.getElementById("Cleararea");
+const stopDraw = document.getElementById("Stopdraw");
+
+
+var intervals = [];
 
 let degree= 0;
-function drawRectanle(x,y,width,height) {
+
+context.strokeText("CLICK ME", 20,20);
+let width = document.getElementById("rectanglewidth").value;
+let height = document.getElementById("rectangleheight").value;
+
+function drawRectanle(x, y) { 
+
+    const withAlpha = document.getElementById("Withalpha").checked;
+    const lineWidth = document.getElementById("linewidth").value;
+    width = document.getElementById("rectanglewidth").value;
+    height = document.getElementById("rectangleheight").value;
+    const rotatonAnlgle = document.getElementById("rotation").value;
     
-  const centerPoint = findCenter(x,y,width,height);    
-  //context.clearRect(0, 0, canvasWidth, canvasHeight);
-  //context.fillStyle(randomColor());
-  context.save();
-  context.translate(centerPoint.xpos, centerPoint.ypos);
-  context.rotate(degree * Math.PI / 180);
-  context.translate(-centerPoint.xpos, -centerPoint.ypos);
-  degree++;
-  context.strokeRect(x,y, width, height);
-  context.restore();
+    const center = getCenter(x, y, width, height);
+    
+    
+    
+    degree = (degree + 6) % 360;    
+    
+    context.save();
+    context.strokeStyle = helpers.randomColor(withAlpha);
+    context.lineWidth = lineWidth;
 
+    context.translate(center.xpos, center.ypos);
+    context.rotate( degree*Math.PI/180 ); 
+    context.translate(-center.xpos, -center.ypos);
 
+    context.beginPath();
+    context.strokeRect(x, y, width, height);
+
+    context.restore();
 }
 
-function findCenter (x,y,width,height) {
+function getCenter (x, y, width, height) {
     return {
         xpos: x + width/2,
         ypos: y + height/2
@@ -42,12 +61,35 @@ function findCenter (x,y,width,height) {
 //}
 
 
-//setInterval(drawRectanle.bind(this, 500, 100, 200,100), 55, this);
+canvas.addEventListener('click', function(){
+    const frameRate = document.getElementById("framerate").value;
+    const cursorPos = helpers.getCursorPosition(this);
+    
+    var e = setInterval(drawRectanle.bind(null, cursorPos.xpos - width/2, cursorPos.ypos - height/2), frameRate);
+    intervals.push(e);
 
-//setInterval(drawRectanle.bind(this, 100, 200, 100,400), 55);
+});
 
-drawRectanle(10,10,100,120)
-//canvas.addEventListener('click', getCursorPosition.bind(null, canvas))
+
+clearArea.addEventListener('click', function(){
+    intervals.forEach(function(inter){
+       clearInterval(inter);
+    })
+    
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.strokeText("CLICK ME", 20,20);
+});
+
+stopDraw.addEventListener('click', function(){
+        intervals.forEach(function(inter){
+       clearInterval(inter);
+    })
+})
+
+
+window.requestAnimationFrame(drawRectanle);
+
+
 
 
 //drawRectanle();

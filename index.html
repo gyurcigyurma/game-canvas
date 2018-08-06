@@ -2,13 +2,42 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Game 363</title>
+  <title>Draw insane</title>
   <link rel="stylesheet" href="res/main.css" />
   <script defer src="build.js"></script>
 </head>
 <body>
   <canvas width="1000" height="800" id="canvas"></canvas>
-
+  <div>    
+    <input id="Cleararea" type="button" value="Clear">
+      
+    <input id="Stopdraw" type="button" value="Stop drawing">
+    <br /> 
+     
+    <label for="Withalpha">Use alpha channel</label>
+    <input id="Withalpha" type="checkbox" />
+    <br />
+      
+    <label for="linewidth">Line width</label>
+    <input id="linewidth" type="range" min="1" max="5" step="1" value="1" />
+    <br />
+      
+    <label for="rectanglewidth">Rectangle width</label>
+    <input id="rectanglewidth" type="range" min="40" max="300" step="10" value="100" />
+    <br />
+      
+    <label for="rectangleheight">Rectangle width</label>
+    <input id="rectangleheight" type="range" min="40" max="300" step="10" value="100" />
+    <br />
+      
+    <label for="framerate">Frame rate</label>
+    <input id="framerate" type="range" min="50" max="500" step="25" value="250" />
+    <br />
+    
+    <label for="rotation">Rotation angle</label>
+    <input id="rotation" type="number" value="2" min="1" max="10"/>
+      
+  </div>
 
 </body>
 </html>
